@@ -57,7 +57,7 @@ Note how we are specifying the full module name so that the Ingestion Framework 
 
 ## OpenMetadata Spatial Connector
 
-To run the OpenMetadata Spatial Connector, the Python class will be `cconnector.spatial_connector.SpatialConnector` and we'll need to set the following Connection Options:
+To run the OpenMetadata Spatial Connector, the Python class will be `connector.spatial_connector.SpatialConnector` and we'll need to set the following Connection Options:
 - `business_unit`: Any name you'd like (Optional - preferably no special characters).
 - `file_source`: The path or URL to the `.shp/.gpkg` file. The connector uses [Fiona](https://fiona.readthedocs.io/en/latest/index.html) which supports [GDAL VFS](https://gdal.org/user/virtual_file_systems.html).
 - `remote`: `true` if `file_source` is a vfs url, e.g. `zip+https://raw.githubusercontent.com/OSGeo/gdal/master/autotest/ogr/data/shp/poly.zip` or `/vsizip//vsicurl/https://raw.githubusercontent.com/OSGeo/gdal/master/autotest/ogr/data/shp/poly.zip`. Can be omitted otherwise.  
