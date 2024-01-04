@@ -44,7 +44,7 @@ We have a `Makefile` prepared for you to run `make run`. This will get OpenMetad
 You may also just run:
 
 ```cmd
-docker compose -f ./docker/docker-compose.yml up
+docker compose -f ./docker/docker-compose.yml up -d
 ```
 
 ## Step 4 - Configure the Connector
