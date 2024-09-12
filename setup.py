@@ -1,10 +1,10 @@
 from setuptools import setup, find_packages
 
-base_requirements = {"openmetadata-ingestion~=1.2.0"}
+base_requirements = {"openmetadata-ingestion~=1.4.1"}
 
 setup(
     name="spacial-connector",
-    version="0.0.1",
+    version="1.1.0",
     url="https://open-metadata.org/",
     author="Daniel Chenari",
     license="MIT license",

@@ -11,22 +11,22 @@ We'll need to package the code so that it can be shipped to the ingestion contai
 
 If you want to use the connector from the UI, the `openmetadata-ingestion` image should be aware of your new package.
 
-We will be running the against the OpenMetadata version `1.2.0`, therefore, our Dockerfile looks like:
+We will be running the against the OpenMetadata version `1.4.4`, therefore, our Dockerfile looks like:
 
 ```Dockerfile
 # Base image from the right version
-FROM openmetadata/ingestion:1.2.0
+FROM openmetadata/ingestion:1.4.4
 
 # Let's use the same workdir as the ingestion image
-WORKDIR ingestion
+WORKDIR /ingestion
 USER airflow
 
 # Install our custom connector
-# For a PROD image, this could be picking up the package from your private package index
 COPY connector connector
 COPY setup.py .
-RUN pip install fiona
 RUN pip install --no-deps .
+RUN pip install fiona
+RUN pip install rasterio
 ```
 Build and use the new openmetadata-ingestion images in Docker compose:
 ```yaml
@@ -58,9 +58,9 @@ Note how we are specifying the full module name so that the Ingestion Framework 
 ## OpenMetadata Spatial Connector
 
 To run the OpenMetadata Spatial Connector, the Python class will be `connector.spatial_connector.SpatialConnector` and we'll need to set the following Connection Options:
-- `business_unit`: Any name you'd like (Optional - preferably no special characters).
-- `file_source`: The path or URL to the `.shp/.gpkg` file. The connector uses [Fiona](https://fiona.readthedocs.io/en/latest/index.html) which supports [GDAL VFS](https://gdal.org/user/virtual_file_systems.html).
-- `remote`: `true` if `file_source` is a vfs url, e.g. `zip+https://raw.githubusercontent.com/OSGeo/gdal/master/autotest/ogr/data/shp/poly.zip` or `/vsizip//vsicurl/https://raw.githubusercontent.com/OSGeo/gdal/master/autotest/ogr/data/shp/poly.zip`. Can be omitted otherwise.  
+- `skip`: Comma-separated list of file extensions that should be skipped. Can be omitted otherwise.
+- `search_directory`: The path or URL to a vector/raster file or folder containing multiple vector/raster files. The connector uses [Fiona](https://fiona.readthedocs.io/en/latest/index.html) and [Rasterio](https://rasterio.readthedocs.io/en/stable/) which support [GDAL VFS](https://gdal.org/user/virtual_file_systems.html).
+- `remote`: `true` if `search_directory` is a vfs url, e.g. `zip+https://raw.githubusercontent.com/OSGeo/gdal/master/autotest/ogr/data/shp/poly.zip` or `/vsizip//vsicurl/https://raw.githubusercontent.com/OSGeo/gdal/master/autotest/ogr/data/shp/poly.zip`. Can be omitted otherwise.  
 
 ## Contributing
 
